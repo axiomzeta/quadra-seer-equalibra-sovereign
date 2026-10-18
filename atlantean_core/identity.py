@@ -2,7 +2,7 @@
 import hashlib
 import json
 from dataclasses import dataclass, asdict
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Optional
 import secrets
 
@@ -37,7 +37,7 @@ class AtlanteanIdentity:
             
         self.device_id = device_id or self._generate_device_id()
         self.metadata = metadata or {}
-        self.created_at = datetime.utcnow().isoformat()
+        self.created_at = datetime.now(timezone.utc).replace(tzinfo=None).isoformat()  # naive-UTC, format-identical to deprecated utcnow()
         
         # Generate keypair
         self._private_key = ed25519.Ed25519PrivateKey.generate()

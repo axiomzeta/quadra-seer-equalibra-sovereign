@@ -21,7 +21,7 @@ import numpy as np
 import json
 import hashlib
 from typing import Dict, List, Optional, Any
-from datetime import datetime
+from datetime import datetime, timezone
 
 from hot_memory import AtlanteanHotMemory
 from vector_cold_memory import VectorColdMemory
@@ -826,7 +826,7 @@ class AtlanteanQuadraBridge:
 
         self.sync_metadata['last_merged_device'] = merge_details.get('remote_device')
         self.sync_metadata['last_merge_strategy'] = merge_details.get('strategy', strategy.value)
-        self.sync_metadata['last_merged_at'] = merge_details.get('timestamp', datetime.utcnow().isoformat())
+        self.sync_metadata['last_merged_at'] = merge_details.get('timestamp') or datetime.now(timezone.utc).replace(tzinfo=None).isoformat()  # lazy default + naive-UTC (utcnow deprecated)
         
         self.hot_memory = merged
         self.bridge.hot = merged

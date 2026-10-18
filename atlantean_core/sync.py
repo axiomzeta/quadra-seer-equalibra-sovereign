@@ -2,7 +2,7 @@
 import torch
 import json
 from dataclasses import dataclass
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Any, Dict, List, Optional
 from enum import Enum
 
@@ -99,7 +99,7 @@ class AtlanteanSyncEngine:
         metadata = SyncMetadata(
             device_id=self.device_id,
             version=self.vector_clock[self.device_id],
-            timestamp=datetime.utcnow().isoformat(),
+            timestamp=datetime.now(timezone.utc).replace(tzinfo=None).isoformat(),  # naive-UTC (utcnow() deprecated)
             vector_clock=self.vector_clock.copy()
         )
         
@@ -159,7 +159,7 @@ class AtlanteanSyncEngine:
             current = self.vector_clock.get(device, 0)
             self.vector_clock[device] = max(current, version)
 
-        merge_timestamp = datetime.utcnow().isoformat()
+        merge_timestamp = datetime.now(timezone.utc).replace(tzinfo=None).isoformat()  # naive-UTC, format-identical to deprecated utcnow()
         action = "noop"
         merged_memory = local_memory
         
