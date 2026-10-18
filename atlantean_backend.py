@@ -613,7 +613,12 @@ try:
     REDIS_AVAILABLE = True
 except (redis.ConnectionError, redis.TimeoutError, Exception) as e:
     print(f"⚠️  Redis unavailable ({type(e).__name__}) - using in-memory storage")
-    app.config['SESSION_TYPE'] = 'filesystem'
+    # flask-session's built-in 'filesystem' interface is deprecated and scheduled
+    # for removal; use its supported CacheLib backend for the on-disk fallback.
+    from cachelib import FileSystemCache
+    app.config['SESSION_TYPE'] = 'cachelib'
+    app.config['SESSION_CACHELIB'] = FileSystemCache(
+        os.path.join(os.path.dirname(os.path.abspath(__file__)), 'flask_session_cache'))
     Session(app)
     REDIS_AVAILABLE = False
     
