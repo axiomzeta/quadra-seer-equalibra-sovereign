@@ -1,0 +1,1 @@
+{"description":"Quadra-Seer Sovereign licensing service: Stripe webhook fulfillment + one-time activation server.","engines":{"node":">=22.5"},"name":"quadra-seer-licensing","private":true,"scripts":{"start":"node server.mjs"},"type":"module","version":"1.0.0"}
