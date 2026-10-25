@@ -1,3 +1,5 @@
+> **License: None — Proprietary. © 2026 Axiom Zeta Innovations LLC. All rights reserved.** This repository is source-visible only. No license is granted to copy, modify, distribute, or use this software except under a paid subscription governed by [EULA.md](EULA.md). Viewing this code grants no rights.
+
 <div align="center">
 <img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
 </div>
